@@ -3,31 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Decode a VIN, check NHTSA recalls, and get AI-assisted automotive guidance for your vehicle.">
-  <title>AutoWise AI</title>
+  <meta name="description" content="Decode a VIN, check NHTSA recalls, and get AI-assisted automotive guidance for your exact vehicle.">
+  <meta name="theme-color" content="#080d14">
+  <meta property="og:title" content="AutoWise AI — Know your car. Drive smarter.">
+  <meta property="og:description" content="VIN-powered vehicle research, recall information, and AI-assisted diagnostic guidance.">
+  <meta property="og:type" content="website">
+  <title>AutoWise AI — Vehicle Intelligence</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚗</text></svg>">
   <link rel="stylesheet" href="style.css">
+  <script src="config.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 
 <body>
-  <nav>
-    <div class="logo">AutoWise<span>AI</span></div>
-    <button class="nav-btn" id="addVehicleButton" type="button">Add Vehicle</button>
+  <nav aria-label="Primary navigation">
+    <a class="logo" href="#top" aria-label="AutoWise AI home">AutoWise<span>AI</span></a>
+    <div class="nav-links">
+      <a href="#howItWorks">How it works</a>
+      <a href="#pricing">Beta access</a>
+      <button class="nav-btn" id="addVehicleButton" type="button">Add Vehicle</button>
+    </div>
   </nav>
 
-  <main>
+  <main id="top">
     <section class="hero">
-      <div class="badge">⚡ Your intelligent automotive assistant</div>
-
+      <div class="badge">⚡ Vehicle intelligence in minutes</div>
       <h1>Know your car.<br><span>Drive smarter.</span></h1>
-
       <p class="subtitle">
-        Decode a VIN to create a vehicle dashboard with specifications,
-        recall information and tools designed around that exact vehicle.
+        Decode a VIN, review safety recalls, and get practical AI-assisted guidance
+        built around your exact vehicle.
       </p>
 
+      <div class="trust-row" aria-label="AutoWise highlights">
+        <span>✓ Official NHTSA data</span>
+        <span>✓ Secure AI backend</span>
+        <span>✓ No account required for VIN lookup</span>
+      </div>
+
       <div class="panel vin-panel" id="vinSection">
-        <label for="vin">Enter your VIN</label>
+        <div class="section-heading-row">
+          <div>
+            <p class="step-label">Step 1</p>
+            <label for="vin">Enter your VIN</label>
+          </div>
+          <button class="text-button" id="loadSavedVehicleButton" type="button" hidden>Load saved vehicle</button>
+        </div>
 
         <div class="vin-row">
           <input
@@ -35,97 +55,108 @@
             maxlength="17"
             autocomplete="off"
             spellcheck="false"
+            aria-describedby="vinHelp status"
             placeholder="Enter your 17-character VIN"
           >
-
-          <button class="primary" id="decodeButton" type="button">
-            Decode Vehicle
-          </button>
+          <button class="primary" id="decodeButton" type="button">Decode Vehicle</button>
         </div>
 
-        <div id="status" class="status" role="status" aria-live="polite">
-          Enter a VIN to get started.
-        </div>
+        <p class="field-help" id="vinHelp">Usually found on the dashboard near the windshield or inside the driver-side door.</p>
+        <div id="status" class="status" role="status" aria-live="polite">Enter a VIN to get started.</div>
+      </div>
+    </section>
+
+    <section class="how-it-works" id="howItWorks" aria-labelledby="howTitle">
+      <p class="eyebrow">Simple by design</p>
+      <h2 id="howTitle">From VIN to useful next steps</h2>
+      <div class="how-grid">
+        <article><span>1</span><h3>Decode</h3><p>Load verified vehicle specifications from NHTSA.</p></article>
+        <article><span>2</span><h3>Research</h3><p>Review recall campaigns and vehicle-specific context.</p></article>
+        <article><span>3</span><h3>Understand</h3><p>Describe symptoms and receive cautious, practical guidance.</p></article>
       </div>
     </section>
 
     <section id="vehicleDashboard" aria-labelledby="vehicleName">
-      <div class="panel">
+      <div class="panel vehicle-panel">
         <div class="vehicle-header">
           <div>
             <div class="eyebrow">Your Vehicle</div>
             <h2 id="vehicleName">Vehicle</h2>
             <p id="vehicleSub"></p>
           </div>
-
-          <button class="save-btn" id="saveVehicleButton" type="button">
-            ☆ Save to Garage
-          </button>
+          <div class="vehicle-actions">
+            <button class="save-btn" id="saveVehicleButton" type="button">☆ Save to Garage</button>
+            <button class="text-button danger-text" id="removeSavedVehicleButton" type="button" hidden>Remove saved vehicle</button>
+          </div>
         </div>
-
         <div class="vehicle-grid" id="vehicleSpecs"></div>
       </div>
 
-      <div class="actions">
+      <div class="actions" aria-label="Vehicle tools">
         <button class="action-card" data-tool="recalls" type="button">
           <span class="action-icon" aria-hidden="true">⚠️</span>
           <span class="action-title">Safety Recalls</span>
-          <span class="action-description">Search available NHTSA recall information for this vehicle.</span>
+          <span class="action-description">Search available NHTSA campaigns for this year, make, and model.</span>
         </button>
-
-        <button class="action-card" data-tool="mechanic" type="button">
+        <button class="action-card featured-action" data-tool="mechanic" type="button">
+          <span class="tool-badge">LIVE</span>
           <span class="action-icon" aria-hidden="true">🔧</span>
           <span class="action-title">AI Mechanic</span>
-          <span class="action-description">Describe a problem while AutoWise keeps your vehicle details in context.</span>
+          <span class="action-description">Analyze symptoms with your decoded vehicle already in context.</span>
         </button>
-
         <button class="action-card" data-tool="maintenance" type="button">
           <span class="action-icon" aria-hidden="true">🛠️</span>
           <span class="action-title">Maintenance</span>
-          <span class="action-description">Build a maintenance checklist around your mileage and vehicle.</span>
+          <span class="action-description">Build a practical mileage-based checklist.</span>
         </button>
-
         <button class="action-card" data-tool="problems" type="button">
           <span class="action-icon" aria-hidden="true">📊</span>
           <span class="action-title">Common Problems</span>
-          <span class="action-description">Research common issues and symptoms associated with your vehicle.</span>
+          <span class="action-description">Prepare symptom and reliability research for this vehicle.</span>
         </button>
-
         <button class="action-card" data-tool="repair" type="button">
           <span class="action-icon" aria-hidden="true">💵</span>
           <span class="action-title">Repair Estimate</span>
-          <span class="action-description">Estimate repair complexity and costs as we expand AutoWise.</span>
+          <span class="action-description">Understand likely complexity before requesting quotes.</span>
         </button>
-
         <button class="action-card" data-tool="buyer" type="button">
           <span class="action-icon" aria-hidden="true">🚘</span>
           <span class="action-title">Buyer Report</span>
-          <span class="action-description">Turn vehicle data into a pre-purchase research report.</span>
+          <span class="action-description">Create a pre-purchase inspection checklist.</span>
         </button>
       </div>
 
       <div class="panel tool-panel" id="recalls">
-        <h3>⚠️ Safety Recalls</h3>
-        <p>Check for available safety recall campaigns.</p>
-
+        <div class="tool-heading">
+          <div><p class="step-label">Official data</p><h3>⚠️ Safety Recalls</h3></div>
+          <a href="https://www.nhtsa.gov/recalls" target="_blank" rel="noopener noreferrer">Verify exact VIN at NHTSA ↗</a>
+        </div>
+        <p>Search available campaigns by year, make, and model. Exact VIN eligibility should always be verified with NHTSA or the manufacturer.</p>
         <button class="primary" id="recallButton" type="button">Check Recalls</button>
         <div id="recallResults" aria-live="polite"></div>
       </div>
 
       <div class="panel tool-panel ai-box" id="mechanic">
-        <h3>🔧 AI Mechanic</h3>
+        <div class="tool-heading">
+          <div><p class="step-label">Step 2</p><h3>🔧 AI Mechanic</h3></div>
+          <span class="usage-pill" id="dailyUsage">5 browser analyses available today</span>
+        </div>
+        <p>Describe what the vehicle is doing, when it happens, and any warning lights, sounds, smells, or recent repairs.</p>
 
-        <p>
-          Describe what your vehicle is doing. AutoWise will securely send the symptoms
-          and decoded vehicle details to the AI Mechanic.
-        </p>
+        <div class="beta-access" id="betaAccessPanel">
+          <div>
+            <strong>Have a paid-beta access code?</strong>
+            <span>Save it in this browser before analyzing symptoms.</span>
+          </div>
+          <div class="access-code-row">
+            <input id="accessCode" type="password" maxlength="80" autocomplete="off" placeholder="Optional beta access code">
+            <button class="secondary" id="saveAccessCodeButton" type="button">Save Code</button>
+          </div>
+          <p class="field-help" id="accessCodeStatus" aria-live="polite"></p>
+        </div>
 
         <label for="symptoms">What is happening?</label>
-        <textarea
-          id="symptoms"
-          maxlength="1500"
-          placeholder="Example: My car shakes when braking from highway speeds..."
-        ></textarea>
+        <textarea id="symptoms" maxlength="1500" placeholder="Example: The engine shakes at idle, the check-engine light is on, and it started after refueling..."></textarea>
 
         <div class="mechanic-actions">
           <button class="primary" id="analyzeButton" type="button">Analyze Symptoms</button>
@@ -133,61 +164,91 @@
         </div>
 
         <div class="ai-response" id="aiResponse" role="status" aria-live="polite"></div>
-        <p class="medical-style-disclaimer">
-          Informational guidance only. Stop driving if the vehicle may be unsafe and consult a qualified technician.
-        </p>
+        <div class="response-actions" id="responseActions" hidden>
+          <button class="secondary" id="copyResponseButton" type="button">Copy Analysis</button>
+          <button class="secondary" id="printResponseButton" type="button">Print / Save PDF</button>
+        </div>
+
+        <details class="analysis-history" id="analysisHistoryPanel" hidden>
+          <summary>Previous analyses on this browser</summary>
+          <div id="analysisHistory"></div>
+          <button class="text-button danger-text" id="clearHistoryButton" type="button">Clear analysis history</button>
+        </details>
+
+        <p class="medical-style-disclaimer">Informational guidance only—not a confirmed diagnosis. Stop driving if the vehicle may be unsafe and consult a qualified technician.</p>
       </div>
 
       <div class="panel tool-panel" id="maintenance">
         <h3>🛠️ Maintenance Planner</h3>
-        <p>Enter the vehicle's current mileage.</p>
-
+        <p>Enter the vehicle’s current mileage for a general planning checklist. Always follow the manufacturer’s schedule when available.</p>
         <div class="vin-row">
-          <input id="mileage" type="number" min="0" max="2000000" placeholder="Current mileage">
-          <button class="primary" id="maintenanceButton" type="button">Create Plan</button>
+          <input id="mileage" type="number" min="1" max="2000000" placeholder="Current mileage">
+          <button class="primary" id="maintenanceButton" type="button">Create Checklist</button>
         </div>
-
-        <div class="ai-response" id="maintenanceResponse"></div>
+        <div class="ai-response checklist-response" id="maintenanceResponse"></div>
       </div>
 
       <div class="panel tool-panel" id="problems">
-        <h3>📊 Common Problems</h3>
-        <p>
-          This section will combine vehicle information with reliability
-          and complaint data in a later version.
-        </p>
-
-        <div class="notice">
-          Vehicle context is already loaded. A future version will connect additional
-          data sources instead of showing generic vehicle advice.
+        <h3>📊 Common Problems Research</h3>
+        <p>Use the decoded vehicle details to research complaints, service bulletins, and model-specific patterns before assuming a repair.</p>
+        <div class="checklist-grid">
+          <div>✓ Record exact symptoms and conditions</div><div>✓ Scan diagnostic trouble codes</div>
+          <div>✓ Check NHTSA complaints and recalls</div><div>✓ Compare multiple repair sources</div>
         </div>
+        <div class="notice">Never replace parts based only on a list of “common problems.” Confirm the fault through testing.</div>
       </div>
 
       <div class="panel tool-panel" id="repair">
-        <h3>💵 Repair Estimate</h3>
-        <p>
-          Repair estimates will eventually combine the vehicle,
-          repair type, parts and estimated labor.
-        </p>
-
-        <div class="notice">This feature is being prepared for the AutoWise premium toolset.</div>
+        <h3>💵 Repair Quote Checklist</h3>
+        <p>Bring consistent information to each shop so estimates are easier to compare.</p>
+        <div class="checklist-grid">
+          <div>✓ Ask for parts and labor separately</div><div>✓ Confirm diagnostic fees</div>
+          <div>✓ Ask whether parts are new, OEM, or remanufactured</div><div>✓ Request warranty terms in writing</div>
+        </div>
+        <div class="notice">Local labor rates and parts availability vary. AutoWise does not guarantee repair prices.</div>
       </div>
 
       <div class="panel tool-panel" id="buyer">
-        <h3>🚘 Buyer Report</h3>
-        <p>
-          AutoWise Buyer Reports will combine decoded vehicle data,
-          recalls, inspection guidance and AI-assisted research.
-        </p>
-
-        <div class="notice">This is one of the features that can later become a one-time paid report.</div>
+        <h3>🚘 Pre-Purchase Checklist</h3>
+        <p>Use this checklist alongside an independent professional inspection.</p>
+        <div class="checklist-grid">
+          <div>✓ Verify title and VIN match</div><div>✓ Check open recalls by exact VIN</div>
+          <div>✓ Scan all vehicle modules for codes</div><div>✓ Inspect cold start and road test</div>
+          <div>✓ Review maintenance records</div><div>✓ Arrange an independent inspection</div>
+        </div>
+        <div class="notice">A VIN decoder is not a vehicle-history report and cannot reveal every accident, title, or maintenance event.</div>
       </div>
     </section>
 
-    <div class="footer-note">
-      AutoWise AI provides informational automotive guidance.
-      Always verify safety-critical information with qualified professionals.
-    </div>
+    <section class="pricing-section" id="pricing" aria-labelledby="pricingTitle">
+      <p class="eyebrow">Founding beta</p>
+      <h2 id="pricingTitle">Useful answers without a monthly commitment</h2>
+      <p class="pricing-intro">The planned beta offer is a small pack of vehicle analyses, protected by individual access codes while AutoWise is tested with early customers.</p>
+      <div class="pricing-card">
+        <div>
+          <span class="pricing-label">Diagnostic Pack</span>
+          <div class="price"><span id="betaPrice">$7</span><small> one time</small></div>
+          <ul><li>3 AI Mechanic analyses</li><li>Vehicle context included automatically</li><li>Printable results</li><li>No subscription</li></ul>
+        </div>
+        <a class="primary pricing-button" id="betaCheckoutButton" href="#vinSection">Beta opening soon</a>
+      </div>
+      <p class="pricing-note">Payment checkout remains disabled until rate controls are deployed and the operator adds a verified checkout link.</p>
+    </section>
+
+    <section class="trust-section" aria-labelledby="trustTitle">
+      <div><p class="eyebrow">Built responsibly</p><h2 id="trustTitle">Clear limits. Safer decisions.</h2></div>
+      <div class="trust-grid">
+        <article><h3>Not a diagnosis</h3><p>AutoWise explains possibilities and next checks. It does not replace hands-on inspection.</p></article>
+        <article><h3>Official recall source</h3><p>Recall research comes from NHTSA, with exact VIN verification encouraged.</p></article>
+        <article><h3>Protected AI access</h3><p>The API key stays server-side, requests are throttled, and beta access can be code-gated.</p></article>
+      </div>
+    </section>
   </main>
+
+  <footer>
+    <div class="footer-brand"><div class="logo">AutoWise<span>AI</span></div><p>Know your car. Drive smarter.</p></div>
+    <div class="footer-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="https://www.nhtsa.gov/recalls" target="_blank" rel="noopener noreferrer">NHTSA Recalls ↗</a></div>
+    <p class="footer-note">© <span id="currentYear"></span> AutoWise AI. Informational automotive guidance only.</p>
+  </footer>
 </body>
 </html>

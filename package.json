@@ -1,11 +1,12 @@
 {
   "name": "autowise-ai",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "private": true,
+  "type": "module",
   "description": "VIN-powered vehicle dashboard and secure AI Mechanic on Netlify",
   "scripts": {
     "dev": "netlify dev",
-    "check": "node --check app.js && node --check netlify/functions/ai-mechanic.js",
+    "check": "node --check config.js && node --check app.js && node --check netlify/functions/ai-mechanic.js && node --check test/ai-mechanic.test.js",
     "test": "node --test test/*.test.js"
   },
   "engines": {

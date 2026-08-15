@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AutoWise AI privacy notice.">
+  <meta name="theme-color" content="#080d14">
+  <title>Privacy - AutoWise AI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav aria-label="Primary navigation">
+    <a class="logo" href="index.html" aria-label="AutoWise AI home">AutoWise<span>AI</span></a>
+    <div class="nav-links"><a href="index.html">Back to AutoWise</a></div>
+  </nav>
+
+  <main class="legal-page">
+    <header class="legal-header">
+      <p class="eyebrow">Privacy notice</p>
+      <h1>What AutoWise uses and why</h1>
+      <p>Last updated: August 15, 2026</p>
+    </header>
+
+    <section class="legal-section">
+      <h2>Plain-language summary</h2>
+      <p>AutoWise is an early beta. It has no user accounts and does not currently use advertising cookies or third-party analytics. Vehicle and analysis history saved by the app stays in your browser unless you send information for an online lookup or AI analysis.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Information processed</h2>
+      <ul>
+        <li><strong>VIN decoding:</strong> the VIN you enter is sent from your browser to the U.S. National Highway Traffic Safety Administration (NHTSA) vPIC service.</li>
+        <li><strong>Recall research:</strong> vehicle year, make, and model are sent from your browser to the NHTSA recalls service. Results are model-based and exact VIN eligibility should be verified with NHTSA or a manufacturer.</li>
+        <li><strong>AI Mechanic:</strong> your symptom description and selected decoded details (year, make, model, engine, fuel, drive type, and body style) are sent through a Netlify serverless function to the OpenAI API. The VIN is not included in the AI prompt.</li>
+        <li><strong>Abuse prevention:</strong> a random browser identifier is converted to a one-way hash before it is sent to OpenAI as a safety identifier. Netlify may process request information such as IP address to enforce rate limits and operate the service.</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>Information stored in your browser</h2>
+      <p>AutoWise may store a saved vehicle, beta access code, random visitor identifier, daily usage counter, and up to five recent AI analyses using browser local storage. Anyone with access to the same browser profile may be able to view this data. You can remove it by using the app's clear or remove controls, or by clearing site data for AutoWise in your browser.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>AI data handling</h2>
+      <p>AutoWise sends API requests with OpenAI response storage disabled. OpenAI and Netlify may still process limited data to provide, secure, and monitor their services under their applicable policies. Do not enter names, addresses, payment information, or other sensitive personal information in a symptom description.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>Payments and contact</h2>
+      <p>Paid checkout is not enabled in this release. Before accepting payments, AutoWise must publish its operator identity, support contact, payment processor disclosure, refund terms, and any required regional privacy rights. This notice is a launch draft and should receive legal review before a public paid launch.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-brand"><div class="logo">AutoWise<span>AI</span></div><p>Know your car. Drive smarter.</p></div>
+    <div class="footer-links"><a href="index.html">Home</a><a href="terms.html">Terms</a></div>
+    <p class="footer-note">AutoWise AI provides informational automotive guidance only.</p>
+  </footer>
+</body>
+</html>
