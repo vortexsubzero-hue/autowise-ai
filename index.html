@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoWise AI</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #080d14;
+      color: white;
+      min-height: 100vh;
+    }
+
+    nav {
+      height: 72px;
+      border-bottom: 1px solid #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8%;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .logo span {
+      color: #22c55e;
+    }
+
+    nav button {
+      background: #22c55e;
+      border: none;
+      padding: 11px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    main {
+      max-width: 1050px;
+      margin: auto;
+      padding: 90px 20px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #12251b;
+      color: #4ade80;
+      border: 1px solid #1d4930;
+      padding: 8px 14px;
+      border-radius: 30px;
+      margin-bottom: 25px;
+      font-size: 14px;
+    }
+
+    h1 {
+      font-size: clamp(42px, 7vw, 76px);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+
+    h1 span {
+      color: #22c55e;
+    }
+
+    .subtitle {
+      color: #94a3b8;
+      max-width: 680px;
+      margin: 0 auto 45px;
+      font-size: 19px;
+      line-height: 1.6;
+    }
+
+    .vin-box {
+      background: #111827;
+      border: 1px solid #253044;
+      padding: 28px;
+      border-radius: 16px;
+      max-width: 760px;
+      margin: auto;
+      text-align: left;
+    }
+
+    .vin-box label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .vin-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    input {
+      flex: 1;
+      background: #080d14;
+      color: white;
+      border: 1px solid #334155;
+      padding: 16px;
+      border-radius: 8px;
+      font-size: 16px;
+      text-transform: uppercase;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #22c55e;
+    }
+
+    .decode {
+      background: #22c55e;
+      border: none;
+      padding: 0 25px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #status {
+      margin-top: 16px;
+      color: #94a3b8;
+    }
+
+    #result {
+      display: none;
+      margin-top: 22px;
+      background: #080d14;
+      border: 1px solid #253044;
+      border-radius: 12px;
+      padding: 22px;
+    }
+
+    .vehicle-title {
+      font-size: 24px;
+      margin-bottom: 18px;
+      color: #4ade80;
+    }
+
+    .vehicle-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .vehicle-item {
+      background: #111827;
+      padding: 14px;
+      border-radius: 8px;
+    }
+
+    .vehicle-item small {
+      display: block;
+      color: #64748b;
+      margin-bottom: 5px;
+    }
+
+    .features {
+      margin-top: 90px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      text-align: left;
+    }
+
+    .feature {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 14px;
+      padding: 25px;
+    }
+
+    .feature h3 {
+      margin-bottom: 10px;
+    }
+
+    .feature p {
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 700px) {
+      nav {
+        padding: 0 20px;
+      }
+
+      main {
+        padding-top: 60px;
+      }
+
+      .vin-row {
+        flex-direction: column;
+      }
+
+      .decode {
+        padding: 16px;
+      }
+
+      .features,
+      .vehicle-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">AutoWise<span>AI</span></div>
+  <button>Get Started</button>
+</nav>
+
+<main>
+
+  <div class="badge">⚡ AI-powered automotive assistant</div>
+
+  <h1>
+    Know your car.<br>
+    <span>Drive smarter.</span>
+  </h1>
+
+  <p class="subtitle">
+    Decode your VIN and understand your vehicle in seconds.
+    AutoWise AI is being built to combine vehicle data,
+    diagnostics, maintenance and buying assistance in one place.
+  </p>
+
+  <div class="vin-box">
+
+    <label for="vin">Decode your VIN</label>
+
+    <div class="vin-row">
+      <input
+        id="vin"
+        maxlength="17"
+        placeholder="Enter your 17-character VIN"
+      >
+
+      <button class="decode" onclick="decodeVIN()">
+        Decode VIN
+      </button>
+    </div>
+
+    <div id="status">
+      Enter a VIN to get started.
+    </div>
+
+    <div id="result"></div>
+
+  </div>
+
+  <section class="features">
+
+    <div class="feature">
+      <h3>🔎 VIN Decoder</h3>
+      <p>
+        Identify important vehicle information from a
+        17-character VIN.
+      </p>
+    </div>
+
+    <div class="feature">
+      <h3>🔧 AI Mechanic</h3>
+      <p>
+        Describe symptoms and eventually receive
+        vehicle-specific diagnostic guidance.
+      </p>
+    </div>
+
+    <div class="feature">
+      <h3>💰 Smart Buying</h3>
+      <p>
+        Build vehicle reports that help buyers understand
+        what they're considering before purchasing.
+      </p>
+    </div>
+
+  </section>
+
+</main>
+
+<script>
+
+async function decodeVIN() {
+
+  const vin =
+    document.getElementById("vin").value
+      .trim()
+      .toUpperCase();
+
+  const status =
+    document.getElementById("status");
+
+  const result =
+    document.getElementById("result");
+
+  result.style.display = "none";
+
+  if (vin.length !== 17) {
+    status.innerText =
+      "Please enter a complete 17-character VIN.";
+    return;
+  }
+
+  status.innerText = "Decoding vehicle...";
+
+  try {
+
+    const url =
+      "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/" +
+      encodeURIComponent(vin) +
+      "?format=json";
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error("VIN service unavailable.");
+    }
+
+    const data = await response.json();
+    const car = data.Results[0];
+
+    if (!car || (!car.Make && !car.Model)) {
+      status.innerText =
+        "We couldn't identify that VIN.";
+      return;
+    }
+
+    status.innerText = "Vehicle found.";
+
+    const vehicleName =
+      [car.ModelYear, car.Make, car.Model]
+        .filter(Boolean)
+        .join(" ");
+
+    result.innerHTML = `
+      <div class="vehicle-title">
+        ${safe(vehicleName)}
+      </div>
+
+      <div class="vehicle-grid">
+
+        ${item("Manufacturer", car.Manufacturer)}
+        ${item("Vehicle Type", car.VehicleType)}
+        ${item("Body Style", car.BodyClass)}
+        ${item("Engine", engineText(car))}
+        ${item("Fuel", car.FuelTypePrimary)}
+        ${item("Drive Type", car.DriveType)}
+
+      </div>
+    `;
+
+    result.style.display = "block";
+
+  } catch (error) {
+
+    console.error(error);
+
+    status.innerText =
+      "Something went wrong while decoding the VIN.";
+
+  }
+}
+
+function engineText(car) {
+
+  const values = [
+    car.EngineCylinders
+      ? car.EngineCylinders + " cylinder"
+      : "",
+    car.DisplacementL
+      ? car.DisplacementL + "L"
+      : ""
+  ].filter(Boolean);
+
+  return values.join(" • ") || "Not listed";
+}
+
+function item(label, value) {
+
+  return `
+    <div class="vehicle-item">
+      <small>${safe(label)}</small>
+      ${safe(value || "Not listed")}
+    </div>
+  `;
+}
+
+function safe(value) {
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+</script>
+
+</body>
+</html>
