@@ -1,412 +1,786 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AutoWise AI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoWise AI</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #080d14;
-      color: white;
-      min-height: 100vh;
-    }
+body{
+font-family:Arial,sans-serif;
+background:#080d14;
+color:#fff;
+min-height:100vh
+}
 
-    nav {
-      height: 72px;
-      border-bottom: 1px solid #1e293b;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 8%;
-    }
+nav{
+height:72px;
+border-bottom:1px solid #1e293b;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 8%;
+position:sticky;
+top:0;
+background:#080d14;
+z-index:10
+}
 
-    .logo {
-      font-size: 24px;
-      font-weight: 800;
-    }
+.logo{font-size:24px;font-weight:800}
+.logo span{color:#22c55e}
 
-    .logo span {
-      color: #22c55e;
-    }
+.nav-btn,.primary{
+background:#22c55e;
+color:#041109;
+border:0;
+padding:13px 20px;
+border-radius:9px;
+font-weight:700;
+cursor:pointer
+}
 
-    nav button {
-      background: #22c55e;
-      border: none;
-      padding: 11px 20px;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+main{
+max-width:1050px;
+margin:auto;
+padding:70px 20px
+}
 
-    main {
-      max-width: 1050px;
-      margin: auto;
-      padding: 90px 20px;
-      text-align: center;
-    }
+.hero{text-align:center}
 
-    .badge {
-      display: inline-block;
-      background: #12251b;
-      color: #4ade80;
-      border: 1px solid #1d4930;
-      padding: 8px 14px;
-      border-radius: 30px;
-      margin-bottom: 25px;
-      font-size: 14px;
-    }
+.badge{
+display:inline-block;
+background:#12251b;
+color:#4ade80;
+border:1px solid #1d4930;
+padding:8px 14px;
+border-radius:30px;
+margin-bottom:25px
+}
 
-    h1 {
-      font-size: clamp(42px, 7vw, 76px);
-      line-height: 1;
-      margin-bottom: 24px;
-    }
+h1{
+font-size:clamp(42px,7vw,72px);
+line-height:1;
+margin-bottom:24px
+}
 
-    h1 span {
-      color: #22c55e;
-    }
+h1 span{color:#22c55e}
 
-    .subtitle {
-      color: #94a3b8;
-      max-width: 680px;
-      margin: 0 auto 45px;
-      font-size: 19px;
-      line-height: 1.6;
-    }
+.subtitle{
+color:#94a3b8;
+max-width:700px;
+margin:0 auto 40px;
+font-size:18px;
+line-height:1.6
+}
 
-    .vin-box {
-      background: #111827;
-      border: 1px solid #253044;
-      padding: 28px;
-      border-radius: 16px;
-      max-width: 760px;
-      margin: auto;
-      text-align: left;
-    }
+.panel{
+background:#111827;
+border:1px solid #263247;
+padding:26px;
+border-radius:16px;
+margin-top:25px
+}
 
-    .vin-box label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 12px;
-    }
+.vin-panel{
+max-width:780px;
+margin:25px auto 0;
+text-align:left
+}
 
-    .vin-row {
-      display: flex;
-      gap: 10px;
-    }
+label{
+display:block;
+font-weight:700;
+margin-bottom:10px
+}
 
-    input {
-      flex: 1;
-      background: #080d14;
-      color: white;
-      border: 1px solid #334155;
-      padding: 16px;
-      border-radius: 8px;
-      font-size: 16px;
-      text-transform: uppercase;
-      outline: none;
-    }
+.vin-row{
+display:flex;
+gap:10px
+}
 
-    input:focus {
-      border-color: #22c55e;
-    }
+input,textarea{
+width:100%;
+background:#080d14;
+color:#fff;
+border:1px solid #334155;
+border-radius:9px;
+padding:15px;
+font-size:16px;
+outline:none
+}
 
-    .decode {
-      background: #22c55e;
-      border: none;
-      padding: 0 25px;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+input:focus,textarea:focus{border-color:#22c55e}
 
-    #status {
-      margin-top: 16px;
-      color: #94a3b8;
-    }
+#status{
+color:#94a3b8;
+margin-top:14px
+}
 
-    #result {
-      display: none;
-      margin-top: 22px;
-      background: #080d14;
-      border: 1px solid #253044;
-      border-radius: 12px;
-      padding: 22px;
-    }
+#vehicleDashboard{
+display:none;
+margin-top:45px
+}
 
-    .vehicle-title {
-      font-size: 24px;
-      margin-bottom: 18px;
-      color: #4ade80;
-    }
+.vehicle-header{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:20px;
+margin-bottom:20px
+}
 
-    .vehicle-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
+.eyebrow{
+color:#4ade80;
+font-size:13px;
+font-weight:700;
+text-transform:uppercase;
+letter-spacing:1px;
+margin-bottom:7px
+}
 
-    .vehicle-item {
-      background: #111827;
-      padding: 14px;
-      border-radius: 8px;
-    }
+.vehicle-header h2{
+font-size:34px;
+margin-bottom:8px
+}
 
-    .vehicle-item small {
-      display: block;
-      color: #64748b;
-      margin-bottom: 5px;
-    }
+.vehicle-header p{color:#94a3b8}
 
-    .features {
-      margin-top: 90px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      text-align: left;
-    }
+.save-btn{
+background:#182334;
+border:1px solid #334155;
+color:white;
+padding:12px 16px;
+border-radius:9px;
+cursor:pointer
+}
 
-    .feature {
-      background: #0f172a;
-      border: 1px solid #1e293b;
-      border-radius: 14px;
-      padding: 25px;
-    }
+.vehicle-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+margin-top:20px
+}
 
-    .feature h3 {
-      margin-bottom: 10px;
-    }
+.vehicle-item{
+background:#080d14;
+border:1px solid #202c3e;
+padding:15px;
+border-radius:10px
+}
 
-    .feature p {
-      color: #94a3b8;
-      line-height: 1.5;
-    }
+.vehicle-item small{
+display:block;
+color:#64748b;
+margin-bottom:6px
+}
 
-    @media (max-width: 700px) {
-      nav {
-        padding: 0 20px;
-      }
+.actions{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin-top:20px
+}
 
-      main {
-        padding-top: 60px;
-      }
+.action-card{
+background:#0f172a;
+border:1px solid #263247;
+border-radius:14px;
+padding:22px;
+cursor:pointer;
+transition:.15s
+}
 
-      .vin-row {
-        flex-direction: column;
-      }
+.action-card:hover{
+transform:translateY(-2px);
+border-color:#22c55e
+}
 
-      .decode {
-        padding: 16px;
-      }
+.action-icon{
+font-size:27px;
+margin-bottom:12px
+}
 
-      .features,
-      .vehicle-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+.action-card h3{margin-bottom:8px}
+
+.action-card p{
+color:#94a3b8;
+line-height:1.45;
+font-size:14px
+}
+
+.tool-panel{
+display:none;
+margin-top:20px
+}
+
+.tool-panel h3{
+font-size:24px;
+margin-bottom:10px
+}
+
+.tool-panel>p{
+color:#94a3b8;
+line-height:1.5;
+margin-bottom:18px
+}
+
+.recall{
+background:#080d14;
+border:1px solid #263247;
+border-radius:10px;
+padding:16px;
+margin-top:12px
+}
+
+.recall h4{
+color:#fbbf24;
+margin-bottom:8px
+}
+
+.recall p{
+color:#cbd5e1;
+line-height:1.5;
+font-size:14px
+}
+
+.ai-box textarea{
+min-height:120px;
+resize:vertical;
+margin-bottom:12px
+}
+
+.ai-response{
+display:none;
+background:#080d14;
+border:1px solid #263247;
+border-radius:10px;
+padding:18px;
+margin-top:15px;
+color:#cbd5e1;
+line-height:1.6
+}
+
+.notice{
+background:#152033;
+border-left:3px solid #22c55e;
+padding:14px;
+color:#cbd5e1;
+line-height:1.5;
+border-radius:6px;
+margin-top:15px
+}
+
+.footer-note{
+text-align:center;
+color:#64748b;
+margin-top:60px;
+font-size:13px
+}
+
+@media(max-width:760px){
+nav{padding:0 20px}
+main{padding-top:45px}
+.vin-row{flex-direction:column}
+.vehicle-header{flex-direction:column}
+.vehicle-grid,.actions{grid-template-columns:1fr}
+}
+</style>
 </head>
 
 <body>
 
 <nav>
-  <div class="logo">AutoWise<span>AI</span></div>
-  <button>Get Started</button>
+<div class="logo">AutoWise<span>AI</span></div>
+<button class="nav-btn" onclick="scrollToVIN()">Add Vehicle</button>
 </nav>
 
 <main>
 
-  <div class="badge">⚡ AI-powered automotive assistant</div>
+<section class="hero">
+<div class="badge">⚡ Your intelligent automotive assistant</div>
 
-  <h1>
-    Know your car.<br>
-    <span>Drive smarter.</span>
-  </h1>
+<h1>Know your car.<br><span>Drive smarter.</span></h1>
 
-  <p class="subtitle">
-    Decode your VIN and understand your vehicle in seconds.
-    AutoWise AI is being built to combine vehicle data,
-    diagnostics, maintenance and buying assistance in one place.
-  </p>
+<p class="subtitle">
+Decode a VIN to create a vehicle dashboard with specifications,
+recall information and tools designed around that exact vehicle.
+</p>
 
-  <div class="vin-box">
+<div class="panel vin-panel" id="vinSection">
+<label>Enter your VIN</label>
 
-    <label for="vin">Decode your VIN</label>
+<div class="vin-row">
+<input id="vin" maxlength="17"
+placeholder="Enter your 17-character VIN">
 
-    <div class="vin-row">
-      <input
-        id="vin"
-        maxlength="17"
-        placeholder="Enter your 17-character VIN"
-      >
+<button class="primary" onclick="decodeVIN()">
+Decode Vehicle
+</button>
+</div>
 
-      <button class="decode" onclick="decodeVIN()">
-        Decode VIN
-      </button>
-    </div>
+<div id="status">Enter a VIN to get started.</div>
+</div>
+</section>
 
-    <div id="status">
-      Enter a VIN to get started.
-    </div>
 
-    <div id="result"></div>
+<section id="vehicleDashboard">
 
-  </div>
+<div class="panel">
 
-  <section class="features">
+<div class="vehicle-header">
 
-    <div class="feature">
-      <h3>🔎 VIN Decoder</h3>
-      <p>
-        Identify important vehicle information from a
-        17-character VIN.
-      </p>
-    </div>
+<div>
+<div class="eyebrow">Your Vehicle</div>
+<h2 id="vehicleName">Vehicle</h2>
+<p id="vehicleSub"></p>
+</div>
 
-    <div class="feature">
-      <h3>🔧 AI Mechanic</h3>
-      <p>
-        Describe symptoms and eventually receive
-        vehicle-specific diagnostic guidance.
-      </p>
-    </div>
+<button class="save-btn" onclick="saveVehicle()">
+☆ Save to Garage
+</button>
 
-    <div class="feature">
-      <h3>💰 Smart Buying</h3>
-      <p>
-        Build vehicle reports that help buyers understand
-        what they're considering before purchasing.
-      </p>
-    </div>
+</div>
 
-  </section>
+<div class="vehicle-grid" id="vehicleSpecs"></div>
+
+</div>
+
+
+<div class="actions">
+
+<div class="action-card" onclick="showTool('recalls')">
+<div class="action-icon">⚠️</div>
+<h3>Safety Recalls</h3>
+<p>Search available NHTSA recall information for this vehicle.</p>
+</div>
+
+<div class="action-card" onclick="showTool('mechanic')">
+<div class="action-icon">🔧</div>
+<h3>AI Mechanic</h3>
+<p>Describe a problem while AutoWise keeps your vehicle details in context.</p>
+</div>
+
+<div class="action-card" onclick="showTool('maintenance')">
+<div class="action-icon">🛠️</div>
+<h3>Maintenance</h3>
+<p>Build a maintenance checklist around your mileage and vehicle.</p>
+</div>
+
+<div class="action-card" onclick="showTool('problems')">
+<div class="action-icon">📊</div>
+<h3>Common Problems</h3>
+<p>Research common issues and symptoms associated with your vehicle.</p>
+</div>
+
+<div class="action-card" onclick="showTool('repair')">
+<div class="action-icon">💵</div>
+<h3>Repair Estimate</h3>
+<p>Estimate repair complexity and costs as we expand AutoWise.</p>
+</div>
+
+<div class="action-card" onclick="showTool('buyer')">
+<div class="action-icon">🚘</div>
+<h3>Buyer Report</h3>
+<p>Turn vehicle data into a pre-purchase research report.</p>
+</div>
+
+</div>
+
+
+<div class="panel tool-panel" id="recalls">
+
+<h3>⚠️ Safety Recalls</h3>
+
+<p id="recallIntro">
+Check for available safety recall campaigns.
+</p>
+
+<button class="primary" onclick="loadRecalls()">
+Check Recalls
+</button>
+
+<div id="recallResults"></div>
+
+</div>
+
+
+<div class="panel tool-panel ai-box" id="mechanic">
+
+<h3>🔧 AI Mechanic</h3>
+
+<p>
+Describe what your vehicle is doing. Your decoded vehicle information
+will eventually be supplied automatically to the AI mechanic.
+</p>
+
+<textarea id="symptoms"
+placeholder="Example: My car shakes when braking from highway speeds..."></textarea>
+
+<button class="primary" onclick="mechanicPreview()">
+Analyze Symptoms
+</button>
+
+<div class="ai-response" id="aiResponse"></div>
+
+</div>
+
+
+<div class="panel tool-panel" id="maintenance">
+
+<h3>🛠️ Maintenance Planner</h3>
+
+<p>Enter the vehicle's current mileage.</p>
+
+<div class="vin-row">
+<input id="mileage" type="number" placeholder="Current mileage">
+<button class="primary" onclick="maintenancePreview()">
+Create Plan
+</button>
+</div>
+
+<div class="ai-response" id="maintenanceResponse"></div>
+
+</div>
+
+
+<div class="panel tool-panel" id="problems">
+
+<h3>📊 Common Problems</h3>
+
+<p>
+This section will combine vehicle information with reliability
+and complaint data in a later version.
+</p>
+
+<div class="notice">
+Vehicle context is already loaded. Next we'll connect additional
+data sources instead of showing generic vehicle advice.
+</div>
+
+</div>
+
+
+<div class="panel tool-panel" id="repair">
+
+<h3>💵 Repair Estimate</h3>
+
+<p>
+Repair estimates will eventually combine the vehicle,
+repair type, parts and estimated labor.
+</p>
+
+<div class="notice">
+This feature is being prepared for the AutoWise premium toolset.
+</div>
+
+</div>
+
+
+<div class="panel tool-panel" id="buyer">
+
+<h3>🚘 Buyer Report</h3>
+
+<p>
+AutoWise Buyer Reports will combine decoded vehicle data,
+recalls, inspection guidance and AI-assisted research.
+</p>
+
+<div class="notice">
+This is one of the features we can later sell as a one-time report.
+</div>
+
+</div>
+
+</section>
+
+<div class="footer-note">
+AutoWise AI provides informational automotive guidance.
+Always verify safety-critical information with qualified professionals.
+</div>
 
 </main>
 
+
 <script>
 
-async function decodeVIN() {
+let currentVehicle = null;
 
-  const vin =
-    document.getElementById("vin").value
-      .trim()
-      .toUpperCase();
-
-  const status =
-    document.getElementById("status");
-
-  const result =
-    document.getElementById("result");
-
-  result.style.display = "none";
-
-  if (vin.length !== 17) {
-    status.innerText =
-      "Please enter a complete 17-character VIN.";
-    return;
-  }
-
-  status.innerText = "Decoding vehicle...";
-
-  try {
-
-    const url =
-      "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/" +
-      encodeURIComponent(vin) +
-      "?format=json";
-
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error("VIN service unavailable.");
-    }
-
-    const data = await response.json();
-    const car = data.Results[0];
-
-    if (!car || (!car.Make && !car.Model)) {
-      status.innerText =
-        "We couldn't identify that VIN.";
-      return;
-    }
-
-    status.innerText = "Vehicle found.";
-
-    const vehicleName =
-      [car.ModelYear, car.Make, car.Model]
-        .filter(Boolean)
-        .join(" ");
-
-    result.innerHTML = `
-      <div class="vehicle-title">
-        ${safe(vehicleName)}
-      </div>
-
-      <div class="vehicle-grid">
-
-        ${item("Manufacturer", car.Manufacturer)}
-        ${item("Vehicle Type", car.VehicleType)}
-        ${item("Body Style", car.BodyClass)}
-        ${item("Engine", engineText(car))}
-        ${item("Fuel", car.FuelTypePrimary)}
-        ${item("Drive Type", car.DriveType)}
-
-      </div>
-    `;
-
-    result.style.display = "block";
-
-  } catch (error) {
-
-    console.error(error);
-
-    status.innerText =
-      "Something went wrong while decoding the VIN.";
-
-  }
+function scrollToVIN(){
+document.getElementById("vinSection").scrollIntoView({
+behavior:"smooth"
+});
 }
 
-function engineText(car) {
+async function decodeVIN(){
 
-  const values = [
-    car.EngineCylinders
-      ? car.EngineCylinders + " cylinder"
-      : "",
-    car.DisplacementL
-      ? car.DisplacementL + "L"
-      : ""
-  ].filter(Boolean);
+const vin=document.getElementById("vin").value
+.trim().toUpperCase();
 
-  return values.join(" • ") || "Not listed";
+const status=document.getElementById("status");
+
+if(vin.length!==17){
+status.innerText="Please enter a complete 17-character VIN.";
+return;
 }
 
-function item(label, value) {
+status.innerText="Decoding vehicle...";
 
-  return `
-    <div class="vehicle-item">
-      <small>${safe(label)}</small>
-      ${safe(value || "Not listed")}
-    </div>
-  `;
+try{
+
+const response=await fetch(
+"https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/"
++encodeURIComponent(vin)+"?format=json"
+);
+
+if(!response.ok) throw new Error();
+
+const data=await response.json();
+const car=data.Results[0];
+
+if(!car || (!car.Make && !car.Model)){
+status.innerText="We couldn't identify that VIN.";
+return;
 }
 
-function safe(value) {
+currentVehicle={
+vin:vin,
+year:car.ModelYear,
+make:car.Make,
+model:car.Model,
+manufacturer:car.Manufacturer,
+type:car.VehicleType,
+body:car.BodyClass,
+cylinders:car.EngineCylinders,
+liters:car.DisplacementL,
+fuel:car.FuelTypePrimary,
+drive:car.DriveType
+};
 
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+renderVehicle();
+status.innerText="Vehicle dashboard created.";
+
+}catch(error){
+
+console.error(error);
+status.innerText="Something went wrong while decoding the VIN.";
+
+}
+
+}
+
+
+function renderVehicle(){
+
+const v=currentVehicle;
+
+document.getElementById("vehicleName").innerText=
+[v.year,v.make,v.model].filter(Boolean).join(" ");
+
+document.getElementById("vehicleSub").innerText=
+"VIN "+v.vin;
+
+document.getElementById("vehicleSpecs").innerHTML=
+spec("Manufacturer",v.manufacturer)+
+spec("Vehicle Type",v.type)+
+spec("Body Style",v.body)+
+spec("Engine",engineText(v))+
+spec("Fuel",v.fuel)+
+spec("Drive Type",v.drive);
+
+document.getElementById("vehicleDashboard").style.display="block";
+
+document.getElementById("vehicleDashboard").scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+}
+
+
+function spec(label,value){
+
+return `
+<div class="vehicle-item">
+<small>${escapeHTML(label)}</small>
+${escapeHTML(value || "Not listed")}
+</div>
+`;
+
+}
+
+
+function engineText(v){
+
+const pieces=[];
+
+if(v.cylinders) pieces.push(v.cylinders+" cylinder");
+if(v.liters) pieces.push(v.liters+"L");
+
+return pieces.join(" • ") || "Not listed";
+
+}
+
+
+function showTool(id){
+
+document.querySelectorAll(".tool-panel").forEach(panel=>{
+panel.style.display="none";
+});
+
+const panel=document.getElementById(id);
+panel.style.display="block";
+
+panel.scrollIntoView({
+behavior:"smooth",
+block:"center"
+});
+
+}
+
+
+async function loadRecalls(){
+
+if(!currentVehicle) return;
+
+const results=document.getElementById("recallResults");
+
+results.innerHTML=
+'<div class="notice">Searching recall information...</div>';
+
+try{
+
+const url=
+"https://api.nhtsa.gov/recalls/recallsByVehicle?make="+
+encodeURIComponent(currentVehicle.make)+
+"&model="+encodeURIComponent(currentVehicle.model)+
+"&modelYear="+encodeURIComponent(currentVehicle.year);
+
+const response=await fetch(url);
+
+if(!response.ok) throw new Error();
+
+const data=await response.json();
+
+if(!data.results || data.results.length===0){
+
+results.innerHTML=
+'<div class="notice">No recall campaigns were returned for this vehicle. Always verify recall status directly with NHTSA or the manufacturer.</div>';
+
+return;
+}
+
+results.innerHTML=data.results.slice(0,10).map(r=>`
+
+<div class="recall">
+
+<h4>${escapeHTML(r.Component || "Recall Campaign")}</h4>
+
+<p>
+<strong>Campaign:</strong>
+${escapeHTML(r.NHTSACampaignNumber || "Not listed")}
+</p>
+
+<p style="margin-top:8px">
+${escapeHTML(r.Summary || "No summary available.")}
+</p>
+
+<p style="margin-top:8px">
+<strong>Remedy:</strong>
+${escapeHTML(r.Remedy || "Contact the manufacturer for remedy information.")}
+</p>
+
+</div>
+
+`).join("");
+
+}catch(error){
+
+console.error(error);
+
+results.innerHTML=
+'<div class="notice">Recall information could not be loaded right now.</div>';
+
+}
+
+}
+
+
+function mechanicPreview(){
+
+const symptoms=document.getElementById("symptoms").value.trim();
+const response=document.getElementById("aiResponse");
+
+response.style.display="block";
+
+if(!symptoms){
+
+response.innerText=
+"Describe the symptoms first and AutoWise will use them with your vehicle information.";
+
+return;
+}
+
+response.innerHTML=
+"<strong>Vehicle context ready:</strong> "+
+escapeHTML([
+currentVehicle.year,
+currentVehicle.make,
+currentVehicle.model,
+engineText(currentVehicle)
+].filter(Boolean).join(" "))+
+"<br><br>"+
+"Your symptom description has been captured. The next upgrade will connect this interface to the AI backend so AutoWise can analyze likely causes, diagnostic steps and repair urgency.";
+
+}
+
+
+function maintenancePreview(){
+
+const mileage=document.getElementById("mileage").value;
+const response=document.getElementById("maintenanceResponse");
+
+response.style.display="block";
+
+if(!mileage){
+
+response.innerText="Enter the vehicle's current mileage first.";
+return;
+
+}
+
+response.innerHTML=
+"<strong>"+escapeHTML(Number(mileage).toLocaleString())+
+" miles</strong><br><br>"+
+"Vehicle and mileage information are ready. We'll use these together when we connect the maintenance recommendation system.";
+
+}
+
+
+function saveVehicle(){
+
+if(!currentVehicle) return;
+
+localStorage.setItem(
+"autowiseVehicle",
+JSON.stringify(currentVehicle)
+);
+
+alert("Vehicle saved to this browser.");
+
+}
+
+
+function escapeHTML(value){
+
+return String(value ?? "")
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
 }
 
 </script>
